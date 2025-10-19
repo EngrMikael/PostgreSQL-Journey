@@ -71,6 +71,39 @@ Focus: arithmetic operators (`%`), `ORDER BY`.
 
 ---
 
+### 🧩 Problem 6 — Advanced: Country Performance Analysis
+
+**Objective**  
+Analyze how each country performs based on customer scores and rankings.
+
+**Scenario**  
+Your sales manager wants a compact, useful report that compares customers *within each country* — not just a flat sort. They need ranks and a clear performance label for each customer so stakeholders can scan country-by-country leaderboards.
+
+**Task**  
+Write a single `SELECT` statement that:
+1. Groups customers conceptually by `country` (rankings reset per country).  
+2. Orders customers within each country by `score` (highest first).  
+3. Adds a ranking column `rank_by_country` reflecting each customer’s position *within their country* (use a window function).  
+4. Adds a computed column `performance_level` with these rules:
+   - `Top Performer` → score ≥ 800  
+   - `Average Performer` → 400 ≤ score < 800  
+   - `Underperformer` → score < 400  
+   - `No Score` → score IS NULL  
+5. Displays results sorted first by `country` (A→Z) then by `rank_by_country` (ascending).
+
+**Rules**
+- Use **one** `SELECT` statement (no multi-statement solutions).
+- **Do not** use subqueries inside `FROM`.
+- Use a window function (e.g., `RANK()` or `DENSE_RANK()`) with `PARTITION BY country` for the ranking.
+- Handle `NULL` scores explicitly (either exclude them or ensure they rank last).
+
+**Notes**
+- You can show all columns (for exploration) or select only the important ones for reporting:
+  `country, customerid, firstname, score, rank_by_country, performance_level`.
+- Consider whether to use `RANK()` (allows gaps after ties) or `DENSE_RANK()` (no gaps).
+
+---
+
 ## 🧰 Tools & Environment
 
 - **Database:** PostgreSQL  
@@ -83,8 +116,8 @@ Focus: arithmetic operators (`%`), `ORDER BY`.
 
 1. Clone or download this repository.
 2. Open `salesdb_queries.sql` (or your filename) in **pgAdmin** or **VS Code**.
-3. Run queries step-by-step to observe the results.
-4. Experiment by changing the conditions and logic.
+3. In **psql** you can run: `\i salesdb_queries.sql` to execute the script file.
+4. Run queries step-by-step to observe the results and experiment.
 
 ---
 
@@ -108,5 +141,3 @@ This repository serves as both a **learning log** and a **reference material** f
 - Data Structures & Algorithms (Python)
 - PostgreSQL and Database Management
 - IoT Automation (ESP32 & Raspberry Pi)
-
----
